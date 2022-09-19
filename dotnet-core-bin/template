@@ -46,7 +46,7 @@ case "$XBPS_TARGET_MACHINE" in
 esac
 
 do_fetch() {
-    curl -O ${distfiles}
+	curl -O ${distfiles}
 }
 
 do_extract() {
@@ -56,12 +56,12 @@ do_extract() {
 do_install() {
 	vmkdir /usr/bin
 	vmkdir /opt/dotnet
-    vmkdir /etc/dotnet
-    # Installing to /opt for simplicity. MS recommends /usr/share but xbps-source doesn't allow ELFs in there.
-    cp -R ./* ${DESTDIR}/opt/dotnet
+	vmkdir /etc/dotnet
+	# Installing to /opt for simplicity. MS recommends /usr/share but xbps-source doesn't allow ELFs in there.
+	cp -R ./* ${DESTDIR}/opt/dotnet
 	vlicense LICENSE.txt
-    ln -s /opt/dotnet/dotnet ${DESTDIR}/usr/bin/dotnet
-    ln -s /opt/dotnet/host/fxr/6.0.9/libhostfxr.so ${DESTDIR}/usr/lib/libhostfxr.so
-    touch ${DESTDIR}/etc/dotnet/install_location
-    echo "/opt/dotnet" > ${DESTDIR}/etc/dotnet/install_location
+	ln -s /opt/dotnet/dotnet ${DESTDIR}/usr/bin/dotnet
+	ln -s /opt/dotnet/host/fxr/6.0.9/libhostfxr.so ${DESTDIR}/usr/lib/libhostfxr.so
+	touch ${DESTDIR}/etc/dotnet/install_location
+	echo "/opt/dotnet" > ${DESTDIR}/etc/dotnet/install_location
 }
