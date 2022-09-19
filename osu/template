@@ -1,0 +1,48 @@
+# Template file for 'osu'
+pkgname=osu
+version=2022.911.0
+revision=1
+archs="x86_64*" # upstream does not target other archs
+hostmakedepends="dotnet-core-bin wget"
+makedepends="dotnet-core-bin"
+depends="dotnet-core-bin SDL2 ffmpeg sqlite"
+short_desc="rhythm is just a *click* away!"
+maintainer="Erick Vilcica <erick.vilcica@protonmail.com>"
+license="MIT, CC-BY-NC-4.0"
+homepage="https://osu.ppy.sh/"
+changelog="https://osu.ppy.sh/home/changelog/lazer/${version}"
+distfiles="https://github.com/ppy/osu/archive/refs/tags/${version}.tar.gz"
+checksum="dd324277538676d2c4af2bc39f7881ad34272bac3ecff609a7d748fa8364a8bb"
+
+case $XBPS_TARGET_MACHINE in
+    x86_64)
+        _dotnet_rid="linux-x64" ;;
+    x86_64-musl)
+        _dotnet_rid="linux-musl-x64" ;;
+    aarch64)
+        _dotnet_rid="linux-arm64" ;;
+    aarch64-musl)
+        _dotnet_rid="linux-musl-arm64" ;;
+esac
+
+do_build() {
+    dotnet publish osu.Desktop -c Release --runtime ${_dotnet_rid} -o "./build" --no-self-contained \/property\:Version\=${version}
+    if [ $XBPS_LIBC = "musl" ]; then
+        rm ./build/libSDL2.so
+        ln -s /usr/lib/libSDL2-2.0.so.0 ./build/libSDL2.so
+        rm ./build/libe_sqlite3.so
+        ln -s /usr/lib/libsqlite3.so.0 ./build/libe_sqlite3.so
+    fi
+}
+
+do_install() {
+    vmkdir /usr/bin
+    vmkdir /usr/share
+    vmkdir /usr/lib/osu
+    cp -r ./build/* ${DESTDIR}/usr/lib/osu
+    vlicense LICENCE LICENCE-MIT
+    wget 'https://raw.githubusercontent.com/ppy/osu-resources/master/LICENCE.md'
+    vlicense LICENCE.md LICENCE_osu\!resources-CC-BY-NC-4.0
+    echo 'OSU_EXTERNAL_UPDATE_PROVIDER=1 dotnet /usr/lib/osu/osu!.dll "$@"' > osu-launch
+    vinstall osu-launch 755 /usr/bin osu
+}

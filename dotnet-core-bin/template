@@ -1,0 +1,67 @@
+# Template file for 'dotnet-core-bin'
+pkgname=dotnet-core-bin
+version=6.0.401
+revision=1
+archs="x86_64 x86_64-musl aarch64 aarch64-musl armv7l armv7l-musl"
+hostmakedepends="tar curl"
+depends="libcurl mit-krb5-libs icu-libs libssl1.1 libunwind libuuid"
+short_desc="Pre-built Microsoft .NET Core"
+maintainer="Erick Vilcica <erick.vilcica@protonmail.com>"
+license="MIT"
+homepage="https://dotnet.microsoft.com"
+changelog="https://raw.githubusercontent.com/dotnet/core/main/release-notes/6.0/6.0.9/6.0.9.md"
+
+_msftlink_x64="8159607a-e686-4ead-ac99-b4c97290a5fd/ec6070b1b2cc0651ebe57cf1bd411315"
+_msftlink_arm64="a567a07f-af9d-451a-834c-a746ac299e6b/1d9d74b54cf580f93cad71a6bf7b32be"
+_msftlink_arm="451f282f-dd26-4acd-9395-36cc3a9758e4/f5399d2ebced2ad9640db6283aa9d714"
+_msftlink_x64_musl="fe83c1f6-a5f0-496d-bb9b-3116fc503505/f0d80d4f6bdc157bd57ad22380ca6217"
+_msftlink_arm64_musl="3a2e1030-4731-496f-8f1a-f7f4af707175/e9cf1d02d391e1982770d2a881464ce9"
+_msftlink_arm_musl="0c223dac-5ede-47c8-ba36-04c0b8a833f8/90e221394c3a8fdfc9bc46d59ff414ce"
+
+case "$XBPS_TARGET_MACHINE" in
+	x86_64)
+		distfiles="https://download.visualstudio.microsoft.com/download/pr/${_msftlink_x64}/dotnet-sdk-${version}-linux-x64.tar.gz"
+		checksum="90613d213d6100566a3be1c3e4d940f9dc4fb94d9bfd7e6346c429e61c31d917"
+		wrksrc="dotnet-sdk-${version}-linux-x64" ;;
+	aarch64)
+		distfiles="https://download.visualstudio.microsoft.com/download/pr/${_msftlink_arm64}/dotnet-sdk-${version}-linux-arm64.tar.gz"
+		checksum="2b6a3f70d3dc98cb8917175ec16fe4d3cdf658b61cbf7d4e5bdf6e7f4424d57e"
+		wrksrc="dotnet-sdk-${version}-linux-arm64" ;;
+	armv7l)
+		distfiles="https://download.visualstudio.microsoft.com/download/pr/${_msftlink_arm}/dotnet-sdk-${vesrion}-linux-arm.tar.gz"
+		checksum="9ce8842ab851c608ceba7fa63cd9211b0b15f2a8f1d92527e0dc0d870895d7e7"
+		wrksrc="dotnet-sdk-${version}-linux-arm" ;;
+	x86_64-musl)
+		distfiles="https://download.visualstudio.microsoft.com/download/pr/${_msftlink_x64_musl}/dotnet-sdk-${version}-linux-musl-x64.tar.gz"
+		checksum="da677d539103f3810face0055cef50b4a1be7aa5d6d86fc628479918bf371ee3"
+		wrksrc="dotnet-sdk-${version}-linux-musl-x64" ;;
+	aarch64-musl)
+		distfiles="https://download.visualstudio.microsoft.com/download/pr/${_msftlink_arm64_musl}/dotnet-sdk-${version}-linux-musl-arm64.tar.gz"
+		checksum="960cb957ddacc92f056e3fa2ba9c059804a078241f06eacff5d3a51cd06308f8"
+		wrksrc="dotnet-sdk-${version}-linux-musl-arm64" ;;
+	armv7l-musl)
+		distfiles="https://download.visualstudio.microsoft.com/download/pr/${_msftlink_arm_musl}/dotnet-sdk-${version}-linux-musl-arm.tar.gz"
+		checksum="55f087d91217889138416d8518057757bf76d00409b38d2a7ffb9b9132181f0e"
+		wrksrc="dotnet-sdk-${version}-linux-musl-arm" ;;
+esac
+
+do_fetch() {
+    curl -O ${distfiles}
+}
+
+do_extract() {
+	tar zxf ${wrksrc}.tar.gz -C ${wrksrc}
+}
+
+do_install() {
+	vmkdir /usr/bin
+	vmkdir /opt/dotnet
+    vmkdir /etc/dotnet
+    # Installing to /opt for simplicity. MS recommends /usr/share but xbps-source doesn't allow ELFs in there.
+    cp -R ./* ${DESTDIR}/opt/dotnet
+	vlicense LICENSE.txt
+    ln -s /opt/dotnet/dotnet ${DESTDIR}/usr/bin/dotnet
+    ln -s /opt/dotnet/host/fxr/6.0.9/libhostfxr.so ${DESTDIR}/usr/lib/libhostfxr.so
+    touch ${DESTDIR}/etc/dotnet/install_location
+    echo "/opt/dotnet" > ${DESTDIR}/etc/dotnet/install_location
+}
