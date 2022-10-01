@@ -8,3 +8,5 @@ rust-bindgen: template for building binary of [rust-bindgen](https://github.com/
 dotnet-core-bin: downloads and installs a prebuilt [.NET core SDK from microsoft](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) (installs to /opt) (only tested on x86_64 glibc)
 
 osu: builds [osu!lazer](https://github.com/ppy/osu) from source using the aforementioned dotnet-core-bin. It does not create a .desktop entry. (only tested on x86_64 glibc)
+
+handlr: template for [handlr](https://github.com/chmln/handlr) and a wrapper to act as replacement for xdg-open
