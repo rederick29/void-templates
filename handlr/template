@@ -3,19 +3,16 @@ pkgname=handlr
 version=0.6.4
 revision=1
 build_style="cargo"
-make_check_args="--bins"
 short_desc="Powerful alternative to xdg-utils written in Rust"
 maintainer="Erick Vilcica <erick.vilcica@protonmail.com>"
 license="MIT"
 homepage="https://github.com/chmln/handlr"
-distfiles="https://github.com/chmln/handlr/archive/refs/tags/v${version}.zip"
+distfiles="https://github.com/chmln/handlr/archive/refs/tags/v${version}.tar.gz"
 checksum="ad4577e2cb901306da7db37c9ee568775281bad841c857a410dcd620ac2623f0"
 
 post_install() {
-	vinstall ${FILESDIR}/xdg-open 755 /usr/bin
-    vlicense LICENSE
-    vcompletion "completions/_handlr" zsh
-    vcompletion "completions/handlr.fish" fish
+	vbin ${FILESDIR}/xdg-open
+	vlicense LICENSE
+	vcompletion "completions/_handlr" zsh
+	vcompletion "completions/handlr.fish" fish
 }
-
-

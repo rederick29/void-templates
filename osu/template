@@ -1,6 +1,6 @@
 # Template file for 'osu'
 pkgname=osu
-version=2022.911.0
+version=2022.1008.2
 revision=1
 archs="x86_64*" # upstream does not target other archs
 hostmakedepends="dotnet-core-bin wget"
@@ -12,7 +12,7 @@ license="MIT, CC-BY-NC-4.0"
 homepage="https://osu.ppy.sh/"
 changelog="https://osu.ppy.sh/home/changelog/lazer/${version}"
 distfiles="https://github.com/ppy/osu/archive/refs/tags/${version}.tar.gz"
-checksum="dd324277538676d2c4af2bc39f7881ad34272bac3ecff609a7d748fa8364a8bb"
+checksum="5b8d04bc1fd70dc5afee9fcc1efaf75b96bf82f9386c5e76a1389c141bbf760a"
 
 case $XBPS_TARGET_MACHINE in
 	x86_64)
