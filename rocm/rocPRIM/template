@@ -1,0 +1,17 @@
+# Template file for 'rocPRIM'
+pkgname=rocPRIM
+version=5.5.0
+revision=1
+archs="x86_64"
+wrksrc="${pkgname}-rocm-${version}"
+build_style=cmake
+LDFLAGS=-L/opt/rocm/lib64
+configure_args="-DCMAKE_INSTALL_PREFIX=/opt/rocm -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr"
+makedepends="hipamd ROCm-CompilerSupport rocm-cmake rocm-llvm perl ROCm-Device-Libs"
+short_desc="ROCm Parallel Primitives"
+maintainer="Erick Vilcica <erick.vilcica@protonmail.com>"
+license="MIT"
+homepage="https://github.com/ROCmSoftwarePlatform/rocPRIM"
+changelog="https://github.com/ROCmSoftwarePlatform/rocPRIM/raw/develop/CHANGELOG.md"
+distfiles="https://github.com/ROCmSoftwarePlatform/rocPRIM/archive/rocm-${version}.tar.gz"
+checksum=968d9059f93d3f0f8a602f7b989e54e36cff2f9136486b6869e4534a5bf8c7d9

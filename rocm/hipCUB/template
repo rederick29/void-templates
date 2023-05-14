@@ -1,0 +1,17 @@
+# Template file for 'hipCUB'
+pkgname=hipCUB
+version=5.5.0
+revision=1
+archs="x86_64"
+build_style=cmake
+LDFLAGS=-L/opt/rocm/lib64
+configure_args="-DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/rocm -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc"
+hostmakedepends="rocm-llvm hipamd perl"
+makedepends="rocm-cmake rocPRIM ROCm-Device-Libs"
+short_desc="Wrapper for CUB using rocPRIM"
+maintainer="Erick Vilcica <erick.vilcica@protonmail.com>"
+license="custom:hipCUB"
+homepage="https://github.com/ROCmSoftwarePlatform/hipCUB"
+changelog="https://github.com/ROCmSoftwarePlatform/hipCUB/raw/develop/CHANGELOG.md"
+distfiles="https://github.com/ROCmSoftwarePlatform/hipCUB/archive/rocm-${version}.tar.gz"
+checksum=3eec838119326a67eb4cc006c706e328f3a51a01e98bbfb518df8fe4a4707e13

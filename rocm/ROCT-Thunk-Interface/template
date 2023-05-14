@@ -1,0 +1,17 @@
+# Template file for 'ROCT-Thunk-Interface'
+pkgname=ROCT-Thunk-Interface
+version=5.5.0
+revision=1
+archs="x86_64"
+wrksrc="${pkgname}-rocm-${version}"
+build_style=cmake
+configure_args="-B . -Wno-dev -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/opt/rocm"
+hostmakedepends="pkg-config"
+makedepends="libnuma-devel libdrm-devel"
+depends=""
+short_desc="Radeon Open Compute Thunk Interface"
+maintainer="Erick Vilcica <erick.vilcica@protonmail.com>"
+license="MIT"
+homepage="https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface"
+distfiles="https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface/archive/rocm-${version}.tar.gz"
+checksum=2b11fd8937c2b06cd4ddea2c3699fbf3d1651892c4c5957d38553b993dd9af18

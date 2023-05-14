@@ -1,0 +1,19 @@
+# Template file for 'rocThrust'
+pkgname=rocThrust
+version=5.5.0
+revision=1
+archs="x86_64"
+wrksrc=${pkgname}-rocm-${version}
+build_style=cmake
+LDFLAGS=-L/opt/rocm/lib64
+configure_args="-DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/opt/rocm/bin/hipcc -DCMAKE_INSTALL_PREFIX=/opt/rocm -Damd_comgr_DIR=/opt/rocm/lib/cmake/amd_comgr"
+hostmakedepends="hipamd perl rocm-llvm"
+makedepends="rocm-cmake ROCm-Device-Libs rocPRIM"
+depends=""
+short_desc="ROCm Thrust"
+maintainer="Erick Vilcica <erick.vilcica@protonmail.com>"
+license="Apache-2.0"
+homepage="https://github.com/ROCmSoftwarePlatform/rocThrust"
+changelog="https://github.com/ROCmSoftwarePlatform/rocThrust/raw/develop/CHANGELOG.md"
+distfiles="https://github.com/ROCmSoftwarePlatform/rocThrust/archive/rocm-${version}.tar.gz"
+checksum=c031f71cd4b6eaf98664fd2ad50fc18f7ccbfa67be415dca425169d2d1c81e9e
